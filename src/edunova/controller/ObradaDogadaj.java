@@ -23,11 +23,18 @@ public class ObradaDogadaj extends Obrada implements ObradaInterface<Dogadaj>{
     
     public List<Dogadaj> getBrojGolova(String utakmica, String igrac, String tip){
         return session.createSQLQuery(" select * from Dogadaj e where "
-                + " utakmica_sifra = :utakmica and igrac_sifra = :igrac and tip_sifra = :tip")
+                + " utakmica_sifra =:utakmica and igrac_sifra =:igrac and tip_sifra=:tip")
                 .setString("utakmica" ,utakmica ).setString("igrac", igrac).setString("tip", tip).list();
              
     }
 
+public List<Dogadaj> getDogadaj(String utakmica, String igrac, String tip){
+        return session.createSQLQuery(" select * from Dogadaj e where "
+                + " utakmica_sifra = :utakmica and igrac_sifra = :igrac and tip_sifra = :tip")
+                .setString("utakmica" ,utakmica ).setString("igrac", igrac).setString("tip", tip).list();
+             
+    }
+    
 
     
     public Dogadaj dodaj(Dogadaj e) throws EdunovaException {

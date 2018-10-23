@@ -55,6 +55,13 @@ public class Dogadaj extends Entitet implements Serializable {
     public void setIgrac(Igrac igrac) {
         this.igrac = igrac;
     }
+
+    @Override
+    public String toString() {
+        return getOpis();
+    }
+    
+    
     
     
 }

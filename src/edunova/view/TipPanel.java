@@ -8,7 +8,7 @@ package edunova.view;
 import edunova.controller.ObradaTip;
 import edunova.model.Tip;
 import javax.swing.JOptionPane;
-import sun.java2d.d3d.D3DRenderQueue;
+
 
 /**
  *
@@ -63,7 +63,7 @@ public class TipPanel extends javax.swing.JPanel {
                 .addComponent(txtVD, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(90, 90, 90))
             .addGroup(layout.createSequentialGroup()
-                .addGap(133, 133, 133)
+                .addGap(158, 158, 158)
                 .addComponent(btnSpremi)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );

@@ -27,13 +27,14 @@ public abstract class Obrada {
         session.beginTransaction();
         session.save(e);
         session.getTransaction().commit();
+        session.clear();
     }
     
     public void obrisi(Entitet e){
         session.beginTransaction();
         session.delete(e);
         session.getTransaction().commit();
-        
+        session.clear();
     }
     
 }

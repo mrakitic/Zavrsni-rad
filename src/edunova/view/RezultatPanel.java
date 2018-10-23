@@ -6,9 +6,12 @@
 package edunova.view;
 
 import edunova.controller.ObradaDogadaj;
+import edunova.controller.ObradaIgrac;
+import edunova.controller.ObradaTip;
 import edunova.controller.ObradaUtakmica;
 import edunova.model.Dogadaj;
 import edunova.model.Igrac;
+import edunova.model.Tip;
 import edunova.model.Utakmica;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,6 +31,11 @@ public class RezultatPanel extends javax.swing.JPanel {
     private ObradaUtakmica obradaUtakmica;
     private ObradaDogadaj obradaDogadaj;
     private List<List<Dogadaj>> listaDogadaja;
+    private Dogadaj dogadaj;
+    private Igrac igrac;
+    private Tip tip;
+    private ObradaIgrac  obradaIgrac;
+    private ObradaTip obradaTip;
     /**
      * Creates new form RezultatPanel
      */
@@ -35,10 +43,14 @@ public class RezultatPanel extends javax.swing.JPanel {
         initComponents();
         setName("Rezultati");
         obradaUtakmica = new ObradaUtakmica();
+        obradaIgrac = new ObradaIgrac();
+        obradaTip = new ObradaTip();
         dpDatumUtakmice1.setDate(new Date());
         dpDatumUtakmice1.getMonthView().setZoomable(true);
         dpDatumUtakmice1.setFormats(DateFormat.getDateInstance(DateFormat.MEDIUM));
         obradaDogadaj = new ObradaDogadaj();
+       
+        
         
     }
 
@@ -63,6 +75,8 @@ public class RezultatPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lstDogadaji = new javax.swing.JList<>();
 
         jLabel2.setText("Odaberite datum utakmice:");
 
@@ -110,6 +124,13 @@ public class RezultatPanel extends javax.swing.JPanel {
 
         jLabel4.setText("Gost:");
 
+        lstDogadaji.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstDogadajiValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(lstDogadaji);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -118,25 +139,28 @@ public class RezultatPanel extends javax.swing.JPanel {
                 .addComponent(pnlUtakmice1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel1)
-                                .addGap(35, 35, 35)
-                                .addComponent(jLabel4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblDomacin, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblGolDomacina))
-                                .addGap(63, 63, 63)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblGolGosti)
-                                    .addComponent(lblGost)))))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(71, 71, 71)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 82, Short.MAX_VALUE))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel1)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblGolDomacina)
+                                        .addComponent(lblDomacin)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(35, 35, 35)
+                                        .addComponent(jLabel4))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(53, 53, 53)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblGolGosti)
+                                            .addComponent(lblGost))))))))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,21 +172,24 @@ public class RezultatPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel4))
-                .addGap(69, 69, 69)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblGost)
+                    .addComponent(lblDomacin))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDomacin)
-                    .addComponent(lblGost))
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblGolDomacina)
-                    .addComponent(lblGolGosti))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblGolGosti)
+                    .addComponent(lblGolDomacina, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void dpDatumUtakmice1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpDatumUtakmice1ActionPerformed
 
         ucitajUtakmice();
+        
 
     }//GEN-LAST:event_dpDatumUtakmice1ActionPerformed
 
@@ -200,6 +227,21 @@ public class RezultatPanel extends javax.swing.JPanel {
            }
         }
         
+        
+        
+      if  (utakmica.getDogadaji() != null) {
+
+            DefaultListModel<Dogadaj> m2 = new DefaultListModel<>();
+            utakmica.getDogadaji().forEach((d) -> {
+                // System.out.println( s + " - " + s.hashCode());
+                m2.addElement(d);
+            });
+            lstDogadaji.setModel(m2);
+            lstDogadaji.repaint();
+            lstDogadaji.revalidate();
+
+        }
+        
             
          
             
@@ -211,6 +253,10 @@ public class RezultatPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_lstUtakmice1ValueChanged
 
+    private void lstDogadajiValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstDogadajiValueChanged
+    
+    }//GEN-LAST:event_lstDogadajiValueChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.jdesktop.swingx.JXDatePicker dpDatumUtakmice1;
@@ -218,15 +264,21 @@ public class RezultatPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblDomacin;
     private javax.swing.JLabel lblGolDomacina;
     private javax.swing.JLabel lblGolGosti;
     private javax.swing.JLabel lblGost;
+    private javax.swing.JList<Dogadaj> lstDogadaji;
     private javax.swing.JList<Utakmica> lstUtakmice1;
     private javax.swing.JPanel pnlUtakmice1;
     // End of variables declaration//GEN-END:variables
 
+    
+  
+    
+    
 private void ucitajUtakmice() {
 
         DefaultListModel<Utakmica> m = new DefaultListModel<>();

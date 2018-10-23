@@ -7,9 +7,12 @@ package edunova.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -29,6 +32,17 @@ public class Utakmica extends Entitet implements Serializable {
     private BigDecimal ulaznica;
     @Temporal(TemporalType.DATE)
     private Date datumOdigravanja;
+    
+    @OneToMany(mappedBy = "utakmica")
+    private List<Dogadaj> dogadaji = new ArrayList<>();
+
+    public List<Dogadaj> getDogadaji() {
+        return dogadaji;
+    }
+
+    public void setDogadaji(List<Dogadaj> dogadaji) {
+        this.dogadaji = dogadaji;
+    }
 
     public Date getDatumOdigravanja() {
         return datumOdigravanja;
